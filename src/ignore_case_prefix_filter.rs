@@ -1,16 +1,21 @@
+extern crate search_candidate;
+
 use Filter;
+use self::search_candidate::SearchCandidate;
+use self::search_candidate::Key;
 
 pub struct IgnoreCasePrefixFilter;
 
 impl Filter for IgnoreCasePrefixFilter {
 
-    fn filter(candidates: Vec<String>, search_term: String) -> Vec<String> {
+    fn filter(candidates: Vec<SearchCandidate>, search_term: String) -> Vec<SearchCandidate> {
         let search_term = search_term.to_lowercase();
         let mut filtered_candidates = Vec::new();
-        for candidate in &candidates {
+        for search_candidate in &candidates {
+            let candidate = search_candidate.get_value(Key::DisplayText);
             let lower_case_candidate = candidate.to_lowercase();
             if lower_case_candidate.starts_with(search_term.as_str()) {
-                filtered_candidates.push(candidate.to_string());
+                filtered_candidates.push(search_candidate.clone());
             }
         }
         filtered_candidates
@@ -21,13 +26,28 @@ impl Filter for IgnoreCasePrefixFilter {
 #[cfg(test)]
 mod tests {
 
+    extern crate search_candidate;
+
     use Filter;
     use ignore_case_prefix_filter::IgnoreCasePrefixFilter;
+    use self::search_candidate::SearchCandidate;
+    use self::search_candidate::Key;
 
     #[test]
     fn prefix_filter() {
-        assert_eq!(IgnoreCasePrefixFilter::filter(vec!["Ab".to_string(), "bc".to_string(),
-                                                       "cd".to_string(), "De".to_string()], "ab".to_string()), ["Ab"]);
+        let sample_search_candidates = vec![
+            SearchCandidate::new(String::from("ab"), String::from("ab"), String::from("")),
+            SearchCandidate::new(String::from("bc"), String::from("Bc"), String::from("")),
+            SearchCandidate::new(String::from("cd"), String::from("cd"), String::from("")),
+            SearchCandidate::new(String::from("de"), String::from("de"), String::from("")),
+            SearchCandidate::new(String::from("B"), String::from("b"), String::from("")),
+        ];
+
+        let filtered_candidates = IgnoreCasePrefixFilter::filter(sample_search_candidates.clone(), String::from("b"));
+        let actual_display_terms = vec!["Bc", "b"];
+        for i in 0..filtered_candidates.len() {
+            assert_eq!(filtered_candidates[i].get_value(Key::DisplayText), actual_display_terms[i]);
+        }
     }
 
 }
