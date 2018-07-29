@@ -8,13 +8,13 @@ pub struct IgnoreCaseSubstringFilter;
 
 impl Filter for IgnoreCaseSubstringFilter {
 
-    fn filter(candidates: Vec<SearchCandidate>, search_term: String) -> Vec<SearchCandidate> {
-        let search_term = search_term.to_lowercase();
+    fn filter(candidates: Vec<SearchCandidate>, search_term: &str) -> Vec<SearchCandidate> {
+        let search_term = &search_term.to_lowercase();
         let mut filtered_candidates = Vec::new();
         for search_candidate in &candidates {
             let candidate = search_candidate.get_value(Key::DisplayText);
             let lower_case_candidate = candidate.to_lowercase();
-            if lower_case_candidate.contains(search_term.as_str()) {
+            if lower_case_candidate.contains(search_term) {
                 filtered_candidates.push(search_candidate.clone());
             }
         }
@@ -43,7 +43,7 @@ mod tests {
             SearchCandidate::new(String::from("B"), String::from("b"), String::from("")),
         ];
 
-        let filtered_candidates = IgnoreCaseSubstringFilter::filter(sample_search_candidates.clone(), String::from("b"));
+        let filtered_candidates = IgnoreCaseSubstringFilter::filter(sample_search_candidates.clone(), "b");
         let actual_display_terms = vec!["ab", "Bc", "b"];
         for i in 0..filtered_candidates.len() {
             assert_eq!(filtered_candidates[i].get_value(Key::DisplayText), actual_display_terms[i]);
