@@ -1,8 +1,8 @@
 extern crate search_candidate;
 
 use Filter;
-use self::search_candidate::SearchCandidate;
 use self::search_candidate::Key;
+use self::search_candidate::SearchCandidate;
 
 pub struct IgnoreCasePrefixFilter;
 
@@ -30,8 +30,8 @@ mod tests {
 
     use Filter;
     use ignore_case_prefix_filter::IgnoreCasePrefixFilter;
-    use self::search_candidate::SearchCandidate;
     use self::search_candidate::Key;
+    use self::search_candidate::SearchCandidate;
 
     #[test]
     fn prefix_filter() {

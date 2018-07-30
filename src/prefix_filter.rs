@@ -1,8 +1,8 @@
 extern crate search_candidate;
 
 use Filter;
-use self::search_candidate::SearchCandidate;
 use self::search_candidate::Key;
+use self::search_candidate::SearchCandidate;
 
 pub struct PrefixFilter;
 
@@ -28,8 +28,8 @@ mod tests {
 
     use Filter;
     use prefix_filter::PrefixFilter;
-    use self::search_candidate::SearchCandidate;
     use self::search_candidate::Key;
+    use self::search_candidate::SearchCandidate;
 
     #[test]
     fn prefix_filter() {

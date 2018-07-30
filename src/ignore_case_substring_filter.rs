@@ -1,8 +1,8 @@
 extern crate search_candidate;
 
 use Filter;
-use self::search_candidate::SearchCandidate;
 use self::search_candidate::Key;
+use self::search_candidate::SearchCandidate;
 
 pub struct IgnoreCaseSubstringFilter;
 
@@ -30,8 +30,8 @@ mod tests {
 
     use Filter;
     use ignore_case_substring_filter::IgnoreCaseSubstringFilter;
-    use self::search_candidate::SearchCandidate;
     use self::search_candidate::Key;
+    use self::search_candidate::SearchCandidate;
 
     #[test]
     fn ignore_case_substring_filter() {

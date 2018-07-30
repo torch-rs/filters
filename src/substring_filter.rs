@@ -1,8 +1,8 @@
 extern crate search_candidate;
 
 use Filter;
-use self::search_candidate::SearchCandidate;
 use self::search_candidate::Key;
+use self::search_candidate::SearchCandidate;
 
 pub struct SubstringFilter;
 
@@ -27,8 +27,8 @@ mod tests {
     extern crate search_candidate;
 
     use Filter;
-    use self::search_candidate::SearchCandidate;
     use self::search_candidate::Key;
+    use self::search_candidate::SearchCandidate;
     use substring_filter::SubstringFilter;
 
     #[test]
