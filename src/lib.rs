@@ -9,6 +9,6 @@ use self::search_candidate::SearchCandidate;
 
 pub trait Filter {
 
-    fn filter(candidates: Vec<SearchCandidate>, search_term: &str) -> Vec<SearchCandidate>;
-
+    fn filter<'s>(candidates: Vec<(SearchCandidate<'s>)>, search_term: &str) -> Vec<(SearchCandidate<'s>)>;
+    
 }
