@@ -8,12 +8,12 @@ pub struct SubstringFilter;
 
 impl Filter for SubstringFilter {
 
-    fn filter<'s>(candidates: Vec<(SearchCandidate<'s>)>, search_term: &str) -> Vec<(SearchCandidate<'s>)> {
+    fn filter(candidates: Vec<SearchCandidate>, search_term: &str) -> Vec<SearchCandidate> {
         let mut filtered_candidates = Vec::new();
-        for search_candidate in candidates {
+        for search_candidate in &candidates {
             let candidate = search_candidate.get_value(Key::DisplayText);
             if candidate.contains(search_term) {
-                filtered_candidates.push(search_candidate);
+                filtered_candidates.push(search_candidate.clone());
             }
         }
         filtered_candidates
@@ -34,14 +34,14 @@ mod tests {
     #[test]
     fn substring_filter() {
         let sample_search_candidates = vec![
-            SearchCandidate::new("ab", "ab", ""),
-            SearchCandidate::new("bc", "bc", ""),
-            SearchCandidate::new("cd", "cd", ""),
-            SearchCandidate::new("de", "de", ""),
-            SearchCandidate::new("b", "b", ""),
+            SearchCandidate::new(String::from("ab"), String::from("ab"), String::from("")),
+            SearchCandidate::new(String::from("bc"), String::from("bc"), String::from("")),
+            SearchCandidate::new(String::from("cd"), String::from("cd"), String::from("")),
+            SearchCandidate::new(String::from("de"), String::from("de"), String::from("")),
+            SearchCandidate::new(String::from("b"), String::from("b"), String::from("")),
         ];
 
-        let filtered_candidates = SubstringFilter::filter(sample_search_candidates, "b");
+        let filtered_candidates = SubstringFilter::filter(sample_search_candidates.clone(), "b");
         let actual_display_terms = vec!["ab", "bc", "b"];
         for i in 0..filtered_candidates.len() {
             assert_eq!(filtered_candidates[i].get_value(Key::DisplayText), actual_display_terms[i]);
